@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -12,6 +12,7 @@ class Product(db.Model):
     category = db.Column(db.String(80), nullable=False)
     price = db.Column(db.String, nullable=False)
     stock = db.Column(db.String, nullable=False)
+    picture = db.Column(db.String, nullable=False)
 
 
 @app.route("/product")
@@ -32,11 +33,13 @@ def get_product(id=None):
                 "category": product.category,
                 "price": product.price,
                 "stock": product.stock,
+                "picture": product.picture
             }
         )
     if id is not None:
         return jsonify(return_data[0])
-    return jsonify(return_data)
+    return render_template("index.html", products=products)
+    
 
 
 @app.route("/create_product", methods=["POST"])
@@ -50,6 +53,7 @@ def create_product(id=None):
             category=data["category"],
             price=data["price"],
             stock=data["stock"],
+            picture = data["picture"]
         )
 
         db.session.add(new_product)
@@ -62,6 +66,7 @@ def create_product(id=None):
         product.name = data["name"]
         product.category = data["category"]
         product.price = data["price"]
+        product.picture = data["picture"]
         db.session.commit()
         return jsonify({"message": "Product updated successfully"})
 
@@ -89,8 +94,8 @@ def update_product(id):
     product.category = data["category"]
     product.price = data["price"]
     product.stock = data["stock"]
+    product.picture = data["picture"]
     db.session.commit()
-
     return jsonify({"message": "Product updated successfully"})
 
 
@@ -101,6 +106,5 @@ def hello_world():
 
 with app.app_context():
     db.create_all()
-
 if __name__ == "__main__":
     app.run(port=9000, debug=True)
