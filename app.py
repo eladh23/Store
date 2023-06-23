@@ -2,7 +2,8 @@ from flask import Flask, jsonify, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///Store.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://elad:wHNNSNp6lK9HOpmyxAz4dk4b3BkdRKP7@dpg-ciajv8d9aq007t9bqt0g-a.oregon-postgres.render.com/test_d1ni"
+# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///Store.db"
 db = SQLAlchemy(app)
 
 
@@ -14,7 +15,7 @@ class Product(db.Model):
     stock = db.Column(db.String, nullable=False)
     picture = db.Column(db.String, nullable=False)
 
-
+@app.route("/")
 @app.route("/product")
 @app.route("/product/<id>")
 def get_product(id=None):
@@ -23,7 +24,7 @@ def get_product(id=None):
     else:
         products = [Product.query.get(id)]
     if not products:
-        return jsonify({"message": "Product not found"}), 404
+        return render_template("index.html"),404
     return_data = []
     for product in products:
         return_data.append(
@@ -98,11 +99,9 @@ def update_product(id):
     db.session.commit()
     return jsonify({"message": "Product updated successfully"})
 
-
-@app.route("/")
-def hello_world():
-    return "<p>Hello, World!</p>"
-
+@app.route("/form")
+def form():
+    return render_template("form.html")
 
 with app.app_context():
     db.create_all()
