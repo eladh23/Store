@@ -48,15 +48,7 @@ def get_product(id=None):
 def create_product(id=None):
     data = request.get_json()
     if id is None:
-        new_product = Product(
-            id=data["id"],
-            name=data["name"],
-            category=data["category"],
-            price=data["price"],
-            stock=data["stock"],
-            picture = data["picture"]
-        )
-
+        new_product = Product(**data)
         db.session.add(new_product)
         db.session.commit()
         return jsonify({"message": "Product created successfully"})
