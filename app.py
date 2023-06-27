@@ -9,7 +9,7 @@ db = SQLAlchemy(app)
 
 class Product(db.Model):
     id = db.Column(db.String, primary_key=True)
-    name = db.Column(db.String(80), unique=True, nullable=False)
+    name = db.Column(db.String(80), nullable=False)
     category = db.Column(db.String(80), nullable=False)
     price = db.Column(db.String, nullable=False)
     stock = db.Column(db.String, nullable=False)
@@ -41,8 +41,6 @@ def get_product(id=None):
         return jsonify(return_data[0])
     return render_template("index.html", products=products)
     
-
-
 @app.route("/create_product", methods=["POST"])
 @app.route("/create_product/<id>", methods=["POST"])
 def create_product(id=None):
@@ -94,6 +92,14 @@ def update_product(id):
 @app.route("/form")
 def form():
     return render_template("form.html")
+
+@app.route("/404")
+def notFound_404():
+    return render_template("404.html")
+
+@app.route("/about")
+def about():
+    return render_template("about.html")
 
 with app.app_context():
     db.create_all()

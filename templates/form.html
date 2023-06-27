@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Form Page</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 </head>
+
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="/">Home</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
@@ -23,39 +26,34 @@
     <h1>Form Page</h1>
     <form id="productForm">
       <div class="form-group">
-        <label for="id">ID</label>
-        <input type="text" class="form-control" id="id" name="id" required>
+        ID<input type="text" class="form-control form-control-sm" id="id" name="id" required>
       </div>
       <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" class="form-control" id="name" name="name" required>
+        Name<input type="text" class="form-control form-control-sm" id="name" name="name" required>
       </div>
       <div class="form-group">
-        <label for="category">Category</label>
-        <input type="text" class="form-control" id="category" name="category" required>
+        Category<input type="text" class="form-control form-control-sm" id="category" name="category" required>
       </div>
       <div class="form-group">
-        <label for="price">Price</label>
-        <input type="text" class="form-control" id="price" name="price" required>
+        Price<input type="text" class="form-control form-control-sm" id="price" name="price" required>
       </div>
       <div class="form-group">
-        <label for="stock">Stock</label>
-        <input type="text" class="form-control" id="stock" name="stock" required>
+        Stock<input type="text" class="form-control form-control-sm" id="stock" name="stock" required>
       </div>
       <div class="form-group">
-            <label for="picture">Picture</label>
-            <input type="text" class="form-control" id="picture" name="picture" required>
+        Picture<input type="text" class="form-control form-control-sm" id="picture" name="picture" required>
       </div>
       <button type="submit" class="btn btn-primary">Create Product</button>
     </form>
+    <a href="/" class="btn btn-secondary">Go Back to Home</a>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
   <script>
-    document.getElementById("productForm").addEventListener("submit", function(event) {
+    document.getElementById("productForm").addEventListener("submit", function (event) {
       event.preventDefault();
-      
+
       var form = event.target;
       var data = {
         id: form.elements["id"].value,
@@ -73,17 +71,19 @@
         },
         body: JSON.stringify(data)
       })
-      .then(function(response) {
-        if (response.ok) {
+        .then(function (response) {
+          if (response.ok) {
             console.log("Product created successfully");
             form.reset();
-        } else {
+          } else {
             console.log("Failed to create product");
-        }})
-      .catch(function(error) {
-            console.log("An error occurred while creating the product");
-      });
+          }
+        })
+        .catch(function (error) {
+          console.log("An error occurred while creating the product");
+        });
     });
   </script>
 </body>
+
 </html>
